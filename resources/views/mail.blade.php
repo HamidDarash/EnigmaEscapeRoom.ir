@@ -1,0 +1,1 @@
+<h1 class="alert alert-success"> ایمیل به   درستی انجام شد</h1>
