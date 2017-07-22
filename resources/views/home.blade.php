@@ -728,7 +728,7 @@
                                     
                                     <div class="form-group text-right alert alert-danger">
                                         <p style="font-size: 1.1em;text-align: justify;font-weight: bolder;">
-                                              گرامی مبلغ 55000 تومان بعنوان پیش پرداخت از شما کسر خواهد شد و مابقی هزینه بازی بصورت حضوری در محل از شما دریافت می گردد
+                                            کاربر گرامی مبلغ 55000 تومان بعنوان پیش پرداخت از شما کسر خواهد شد و مابقی هزینه بازی بصورت حضوری در محل از شما دریافت می گردد
                                         </p>
                                     </div>
                                     <div class="form-group text-right hidden">
