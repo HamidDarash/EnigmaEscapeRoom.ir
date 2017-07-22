@@ -55,12 +55,16 @@
             @endif
         </div>
     </div>
+     
 
     <div class="form-group">
         <div class="col-md-6">
             <button type="button" id="click-register" class="btn btn-primary btn-block">
                 <i class="fa fa-btn fa-user"></i> ثبت نام
             </button>
+        </div>
+        <div class="col-md-6">
+            <a href="#" class="btn btn-link" id="ifRegistered" data-dismiss="modal">چنانچه قبلا ثبت نام نموده اید به فرم لاگین منتقل شوید</a>
         </div>
     </div>
 </form>

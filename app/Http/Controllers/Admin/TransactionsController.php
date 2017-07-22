@@ -21,6 +21,7 @@ class TransactionsController extends Controller
     public function index(Request $request)
     {
 
+        session(['current_menu_select' => 'transactions']);
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -36,9 +37,11 @@ class TransactionsController extends Controller
 				
                 ->paginate($perPage);
         } else {
-            $transactions = DB::table('transactions')->orderBy('id','DESC')->paginate($perPage);
+           // $transactions = DB::table('transactions')->orderBy('id','DESC')->paginate($perPage);
+            $transactions = Transaction::orderBy('id','DESC')->paginate($perPage);
         }
 
+       // dd($transactions[0]->Users());
 
         return view('admin.transactions.index', compact('transactions'));
     }

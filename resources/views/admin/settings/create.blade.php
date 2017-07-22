@@ -1,4 +1,15 @@
 @extends('layouts.admin')
+@section('script')
+ <script>
+     $(document).ready(function(){
+         $(".icons-soceial .fa").click(function(){
+             $("#optionText").text($(this).attr('title'));
+             $("#optionText").val($(this).attr('title'));
+         });
+         
+     });
+ </script>
+@stop
 
 @section('content')
     <div class="panel panel-default">

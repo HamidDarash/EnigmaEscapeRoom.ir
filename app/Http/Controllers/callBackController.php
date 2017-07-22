@@ -33,19 +33,19 @@ class callBackController extends Controller
 
         if (isset($data) && !empty($data)) {
             try {
-             //   $gateway = Gateway::Zarinpal();
-              //  $gateway->setCallback(url('/callBackRequest'));
-             //   $gateway->price($data['price'])->ready();
-              //  $gateway->setDescription($data['description']);
-             //   $refId = $gateway->refId();
-              //  $transID = $gateway->transactionId();
-              //  $request->user()->Transactions()->attach($transID);
+               $gateway = Gateway::Zarinpal();
+               $gateway->setCallback(url('/callBackRequest'));
+               $gateway->price($data['price'])->ready();
+               $gateway->setDescription($data['description']);
+               $refId = $gateway->refId();
+               $transID = $gateway->transactionId();
+               $request->user()->Transactions()->attach($transID);
 
-               // return $gateway->redirect();
+               return $gateway->redirect();
 
-                Session::flash('reserve_person', 'بازی جدید اضافه گردید');
+               // Session::flash('reserve_person', 'بازی جدید اضافه گردید');
 
-                return redirect('/',200);
+                //return redirect('/',200);
             } catch (Exception $e) {
                 echo $e->getMessage();
             }

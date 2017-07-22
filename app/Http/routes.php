@@ -1,9 +1,18 @@
 <?php
 
 Route::group(['middleware' => 'onlyAjax'], function () {
-    Route::auth();
+    $this->get('login', 'Auth\AuthController@showLoginForm');
+    $this->get('register', 'Auth\AuthController@showRegistrationForm');
+    $this->post('login', 'Auth\AuthController@login');
+    $this->post('register', 'Auth\AuthController@register');
+    $this->get('logout', 'Auth\AuthController@logout');
+    
     Route::post('/getGameInformation', 'DefaultController@getGameInformation');
 });
+
+$this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
+$this->post('password/email', 'Auth\PasswordController@sendResetLinkEmail');
+$this->post('password/reset', 'Auth\PasswordController@reset');
 
 Route::get('/', 'DefaultController@renderPage');
 

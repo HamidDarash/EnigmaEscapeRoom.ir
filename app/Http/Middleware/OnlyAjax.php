@@ -5,6 +5,16 @@ use Illuminate\Routing\Route;
 
 class OnlyAjax
 {
+    
+     /**
+     * The URIs that should be excluded from Ajax Checker.
+     *
+     * @var array
+     */
+    protected $except = [
+        'password/reset',
+    ];
+    
     /**
      * Handle an incoming request.
      *

@@ -28,11 +28,14 @@
 
     <div class="form-group">
         <div class="col-md-6">
-            <button id="click-login" type="button" class="btn btn-primary">
+            <button id="click-login" type="button" class="btn btn-primary btn-block">
                 <i class="fa fa-btn fa-sign-in"></i> ورود
             </button>
-            <a class="btn btn-link" href="{{ url('/password/reset') }}">کلمه عبور خود را فراموش کردید؟</a>
+            
         </div>
+        <div class="col-md-6">
+            <a class="btn btn-link" href="{{ url('/password/reset') }}">کلمه عبور خود را فراموش کردید؟</a>
+        </div>    
     </div>
     <div id="error-holder" class="form-group hidden">
         <div id="error" class="alert alert-danger">

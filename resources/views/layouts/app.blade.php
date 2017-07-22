@@ -4,6 +4,18 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <META NAME="Title" CONTENT="Enigma Escape Room">
+    <META NAME="Keywords" CONTENT="enigma,escape,room,فرار,اتاق">
+    <META NAME="Description" CONTENT="ماشین انیگما در سال 1920 و بعد از جنگ جهانی اول بدست مهندسان آلمانی اختراع شد . این ...">
+    <META NAME="Language" CONTENT="fa">
+    <META NAME="Robots" CONTENT="INDEX,FOLLOW">
+    <!-- meta graph    -->    
+    <meta property="og:title" content="EnigmaEscapeRoom">
+    <meta property="og:site_name" content="EnigmaEscapeRoom">
+    <meta property="og:url" content="http://www.enigmaescaperoom.ir">
+    <meta property="og:description" content="ماشین انیگما در سال 1920 و بعد از جنگ جهانی اول بدست مهندسان آلمانی اختراع شد . این ماشین جهت رمز نگاری و رمز گشایی پیامهای نظامی در طول جنگ جهانی دوم بکار میرفت. در نهایت بدلیل ضعف های رمز نگاری و ای">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="http://enigmaescaperoom.ir/img/logo-site-2.png">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -74,7 +86,7 @@
                     </li>
                 @endif
                 <li class="page-scroll">
-                    <a href="#maps_google"><span class="fa fa-map"></span> آدرس ما</a>
+                    <a href="#footer"><span class="fa fa-map-marker"></span> ارتباط با ما</a>
                 </li>
 
 
@@ -118,9 +130,8 @@
 </nav>
 
 @yield('content')
-<button class="btn btn-success btn-block" data-toggle="modal" data-target="#ReserveResultModal">Launch Modal</button>
 
-<footer class="text-center">
+<footer id="footer" class="text-center">
     <div class="footer-above">
         <div class="container">
             <div class="row">
@@ -128,12 +139,14 @@
                     <h3>آدرس</h3>
                     <p>برج ميلاد،گذرگاه ميلاد،روبروي اورژانس</p>
                     <p>تماس با پشتیبانی <span style="color:yellow">09120030269</span></p>
-                    <br/><br/><br/><br/>
+                    <p>تماس با مدیریت<span style="color:yellow">09122386032</span></p>
+                    <br/><br/><br/>
                     <p>
-                        {{--<script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>--}}
+                      <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script> 
                     </p>
                 </div>
                 <div class="footer-col col-md-4">
+                    <div class="col-md-12">
                     <h3>همراه ما در جوامع مجازی باشید</h3>
                     <ul class="list-inline">
                         @if(isset($setting))
@@ -142,13 +155,18 @@
                                     <li>
                                         <a href="{{ $settingItem->value }}" class="btn-social btn-outline"><span
                                                     class="sr-only">{{ $settingItem->key }}</span><i
-                                                    class="fa fa-fw fa-{{ $settingItem->key }}"></i></a>
+                                                    class="fa fa-fw {{ $settingItem->key }}"></i></a>
                                     </li>
                                 @endif
                             @endforeach
                         @endif
 
                     </ul>
+                    </div>
+                    <div class="col-md-12" style="overflow:hidden">
+                      <h3 class="text-center" style="margin-bottom: 5px;">آدرس ما</h3>  
+                       <div id="map" class="img-thumbnail" style="width:100%;height:145px;overflow:hidden;position:relative;"></div>
+                    </div>
                 </div>
                 <div class="footer-col col-md-4">
                     <h3>تماس با پشتیبانی</h3>
@@ -282,7 +300,7 @@
                             <h2>
                                 <span>با تشکر از شما</span>&nbsp;<span>{{ Auth::user()->name }}</span>&nbsp;<span>عزیز</span>
                             </h2>
-                            <p>درخواست رزرو بازی شما بدرستی ثبت گردید جهت کسب اطلاعات بیشتر با شماره 09120030269 تماس
+                            <p style="justify">درخواست رزرو بازی شما بدرستی ثبت گردید جهت کسب اطلاعات بیشتر با شماره 09120030269 تماس
                                 حاصل فرمایید و یا کمی صبر کنید تا مسئولین بازی با شما تماس بگیرند</p>
                         </div>
                     </div>
@@ -445,6 +463,13 @@
                 url: '/register',
                 success: function (data) {
                     $("#login-modal .modal-body").html(data);
+                    $("#ifRegistered").click(function(event){
+                      event.preventDefault();
+                      setTimeout(function () {
+                          $('#login-form-load').click();
+                        },500);
+                    });
+                
                     $("#click-register").click(function () {
                         var formData = $('#form-register').serialize();
 //                        console.log(formData);
@@ -537,6 +562,9 @@
                         setTimeout(function () {
                             $('#MessageResultModal').modal('hide');
                         }, 2000);
+                        
+                        document.getElementById("messageSender").reset();
+                        
                     }, 1000);
                 },
                 error: function (err, status) {

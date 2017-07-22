@@ -27,23 +27,17 @@ class DefaultController extends Controller
     public function sendEmail(Request $request)
     {
         $data = $request->all();
-        $user = User::where('email', '=', $data['emailto'])->get();
-
-        if (count($user) > 0) {
-            try {
-                Mail::send(['text' => 'mail'], ['user' => $user],
-                    function ($message) use ($user, $data) {
-                        $message->to($user[0]['email'], $data['message'])->subject($data['subject']);
-                        $message->from('info@enigmaescaperoom.ir', 'EnigmaEscapeRoom');
-                    });
-
+          try {
+                $to = "info@enigmaescaperoom.ir";;
+                $subject = $data['subject'];
+                $txt = $data['message'];
+                $headers = "From: ".$data['emailto']. "\r\n";
+                $mail=mail($to,$subject,$txt,$headers);
                 return "<div class='alert alert-success'>ایمیل بدرستی ارسال گردید</div>";
             } catch (Exception $ex) {
                 return "<div class='alert alert-danger'>در ارسال ایمیل خطایی رخ داد</div>";
             }
-        } else {
-            return "<div class='alert alert-danger'>در ارسال ایمیل خطایی رخ داد</div>";
-        }
+         
         return "<div class='alert alert-danger'>در ارسال ایمیل خطایی رخ داد</div>";
     }
 
@@ -130,7 +124,7 @@ class DefaultController extends Controller
                     $table .= "<tr>";
                     for ($j = 0; $j <= 6; $j++) {
                         $dateMiladi = date("Y-m-d", strtotime($start_date . " + $j day"));
-                        $timed = $game_start->format('H:i:s');
+                        $timed = $game_start->format('H:i');
                         if ($disableClass) {
                             if ($this->findReservItem($dateMiladi, $timed, $game_id)) {
                                 $table .= "<td class='dataReservedDisable'><div class='span'>رزرو شده</div></td>";
@@ -142,7 +136,15 @@ class DefaultController extends Controller
                                 $table .= "<td class='dataReservedDisable'><div class='span'>رزرو شده</div></td>";
                             } else {
                                 $dateShamsi = \Morilog\Jalali\jDate::forge($dateMiladi)->format('Y-m-d');
-                                $table .= "<td class='dataReserved table-item-reservation' game-price='$game_price' date-miladi='$dateMiladi' date-shamsi='$dateShamsi' time-select='$timed'>$timed <i class='fa fa-clock-o' aria-hidden='true'></i></td>";
+                               
+                                $TEMPTime = strtotime("+".$game_time." minutes", strtotime($timed));
+                                
+                                if(date('H:i') > $timed && ($dateMiladi <= date('Y-m-d') )){
+                                     $table .= "<td class='dataReservedDisable2'><div class='span'>پایان مهلت</div></td>";
+                                }else{
+                                   $table .= "<td class='dataReserved table-item-reservation' game-price='$game_price' date-miladi='$dateMiladi' date-shamsi='$dateShamsi' time-select='$timed'>$timed <i class='fa fa-clock-o' aria-hidden='true'></i></td>";  
+                                }
+                               
                             }
                         }
                     }

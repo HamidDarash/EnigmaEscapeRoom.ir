@@ -199,8 +199,19 @@
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{{ Route::getCurrentRoute()->getPath() == 'admin/slider' ? 'active':'' }}">
+                        <li class="{{ Route::getCurrentRoute()->getPath() == 'admin/settings' ? 'active':'' }}">
                             <a href="{{ url('admin/settings')  }}"><i class="fa fa-sliders"></i>تنظیمات</a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="treeview {{ Session::get('current_menu_select')=='transactions'?'active':'' }}">
+                    <a href="#">
+                        <i class="fa fa-cogs"></i> <span>تراکنش</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ Route::getCurrentRoute()->getPath() == 'admin/transactions' ? 'active':'' }}">
+                            <a href="{{ url('admin/transactions')  }}"><i class="fa fa-paypal"></i>تراکنش</a>
                         </li>
                     </ul>
                 </li>

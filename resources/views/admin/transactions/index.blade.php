@@ -2,6 +2,9 @@
 
 @section('content')
 
+  
+ 
+
     <div class="panel panel-default">
         <div class="panel-heading">تراکنش های مالی</div>
         <div class="panel-body">
@@ -24,21 +27,46 @@
                     <table class="table table-borderless">
                         <thead>
                         <tr>
-                            <th>کاربر</th>
+                            <th>کاربر </th>
                             <th>شناسه</th>
                             <th>درگاه</th>
                             <th>مبلغ</th>
                             <th>کد پیگیری</th>
+                            <th>زمان پرداخت</th>
+                            <th>وضعیت پرداخت</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($transactions as $item)
                             <tr>
-                                <td> {{ $item->Users()->email }}</td>
+                                 @php $listUsers = $item->Users()->get(); @endphp
+                                  @if(count($listUsers) > 0)
+                                    @foreach($listUsers as $it)
+                                      <th> {{ $it->email }} </th>
+                                    @endforeach
+                                  @else
+                                      <th> {{ 'نامشخص' }} </th>
+                                  @endif
                                 <td>{{ $item->id }}</td>
                                 <td>{{ $item->port }}</td>
-                                <td>{{ $item->price }}</td>
-                                <td>{{ $item->tracking_code }}</td>
+                                <td>{{ $item->price }} <span class="badge alert-info">تومان</span></td>
+                                <td>{!! $item->tracking_code ? $item->tracking_code :'<span class="badge alert-warning">خالی</span>' !!}</td>
+                                <td> {!! $item->payment_date != null ?  jDate::forge($item->payment_date)->format('date') : '<span class="badge alert-danger">خطا داشته</span>' !!}</td>
+                                <td>  
+                                @php
+                                   switch ($item->status) {
+                                    case 'INIT':
+                                     echo "<span class='badge alert-warning'>در وضعیت انتظار</span>";
+                                    break;
+                                    case 'SUCCEED':
+                                    echo "<span class='badge alert-success'>وضعیت موفق</span>";
+                                    break;
+                                    case 'FAILED':
+                                      echo "<span class='badge alert-danger'>وضعیت نا موفق</span>";
+                                    break;
+                                    }
+                                @endphp
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

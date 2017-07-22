@@ -18,7 +18,7 @@
             <h1>پرداخت موفق</h1>
             <strong>شماره رهگیری شما </strong><i class="fa fa-info-circle"></i> <span> {{ $trackingCode }}</span><strong>می
                 باشد</strong>
-            <h2>در صورت داشتن هرگونه سوال می توانید با شماره پشتیبانی تماس حاصل فرمایید</h2>
+             <h2>رزرو شما با موفقیت انجام شد،لطفا 15 دقیقه قبل از زمان بازی در محل حضور داشته باشید</h2>
         </div>
         <a class="btn btn-lg btn-block btn-success" href="{{ url('/') }}">بازگشت به سایت</a>
     </div>

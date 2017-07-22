@@ -145,18 +145,26 @@
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 13,
                 center: {lat: 35.74613, lng: 51.37563},
-                mapTypeControlOptions: {
-                    mapTypeIds: [google.maps.MapTypeId.ROADMAP, '']
+                zoomControl: true,
+                zoomControlOpt: {
+                  style: 'SMALL',
+                  position: 'TOP_LEFT'
                 }
+            
+                //mapTypeControlOptions: {
+               //     mapTypeIds: [google.maps.MapTypeId.HYBRID, '']
+               // }
             });
             var marker = new google.maps.Marker({
                 position: bangalore,
                 map: map,
-                icon: "{{ asset('img/logo-site-2.png') }}"
+                icon: "{{ asset('img/logo-site-4.png') }}"
             });
             marker.setAnimation(google.maps.Animation.BOUNCE);
-            map.mapTypes.set('EnigmaEscapeRoom', usRoadMapType);
-            map.setMapTypeId('EnigmaEscapeRoom');
+            
+            
+            //map.mapTypes.set('EnigmaEscapeRoom', usRoadMapType);
+           // map.setMapTypeId(google.maps.MapTypeId.HYBRID);
         }
     </script>
     <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyD1Ywz1RgQ1Qwlw184YnOR_hxpZpsjOtsc&callback=initMap"
@@ -165,7 +173,12 @@
 @section('javascript')
 
     <script type="text/javascript" rel="script">
+    document.addEventListener("touchstart", function() {}, false);
+    
         $(document).ready(function () {
+            
+             
+             
             $('.slide').textSlider();
 
             $("#lawCheck").change(function () {
@@ -242,6 +255,9 @@
                 $('#sDate').val($(this).attr('lastWeek'));
                 $('#SendInfoDrawerForm').submit();
             });
+            
+         
+                
             $(document).on('click', '.dataReserved', function (event) {
                 $("#lawCheck").prop('checked', false);
                 if (!$(this).find('input[type="submit"]').hasClass('disabled')) {
@@ -253,9 +269,10 @@
                 if (userId != null && userId != "") {
                     $('#form-reserve-game').modal();
                 } else {
-                    $('#login-form-load').click();
+                    $('#register-form-load').click();
                     return false;
                 }
+
                 var timeGo = $(this).attr('time-select');
                 var dateGo = $(this).attr('date-miladi');
 
@@ -272,7 +289,7 @@
                 if(opt.length>0){
                     var i = 0;
                     var tempOption = '';
-                    var tempTable = '<table class="table table-bordered"><tr><th>تعداد نفر</th><th>قیمت</th></tr>';
+                    var tempTable =   '<table class="table table-bordered"><tr><th>تعداد نفر</th><th>قیمت به ازای هر نفر</th></tr>';
                     for (i = 0; i <= opt.length - 1; i++) {
                         var tempVal = opt[i].split('|');
                         tempOption += '<option value="' + tempVal[0] + '">' + tempVal[0] + ' نفر ' + '</option>';
@@ -475,18 +492,17 @@
                 <div class="col-lg-12 text-center">
                     <h2 class="text-right" style="margin-bottom: 30px">درباره ما</h2>
                     <div class="col-md-6">
-                        <p style="text-align: justify">
-                            ماشین انیگما در سال 1920 و بعد از جنگ جهانی اول بدست مهندسان آلمانی اختراع شد .
-                            این ماشین جهت رمز نگاری و رمز گشایی پیامهای نظامی در طول جنگ جهانی دوم بکار میرفت. در نهایت
-                            بدلیل ضعف های رمز نگاری و ایراد های کاربران و پی بردن متفقین به جدول های رمز گشایی, و در راس
-                            آنها ریاضیدان و نابغه انگلیسی آلن تورینگ رمز آن شکسته شد.
-                            بازی فرار از اتاق یک بازی فیزیکی ـ ماجراجویی است که در آن بازیکنان در یک اتاق قفل شده قرار
-                            میگیرند و می بایست به صورت گروهی و در قالب یک تیم با حل کردن معما ها پیدا کردن سرنخ ها و به
-                            کار بردن استراتژی های متفاوت و مختلف در زمانی مشخص که از قبل تعیین شده از اتاق فرار کنند
-                        </p>
+                        <h3 style="color:#000" class="text-right">تاریخچه ماشین انیگما</h3>
+                        <p style="text-align: justify">ماشین انیگما در سال 1920 و بعد از جنگ جهانی اول بدست مهندسان آلمانی اختراع شد . این ماشین جهت رمز نگاری و رمز گشایی پیامهای نظامی در طول جنگ جهانی دوم بکار میرفت. در نهایت بدلیل ضعف های رمز نگاری و ایراد های کاربران و پی بردن متفقین به جدول های رمز گشایی, و
+                        در راس آنها ریاضیدان و نابغه انگلیسی آلن تورینگ رمز آن شکسته شد.</p> 
+                        <img src="{{ asset('img/escape-logo-black.png') }}" width="100%" style="margin-top:8px"/>
                     </div>
                     <div class="col-md-6">
+                        <h3 style="color:#000" class="text-right">بازی فرار از اتاق چیست؟</h3>
                         <p style="text-align: justify">
+                             بازی فرار از اتاق یک بازی فیزیکی ـ ماجراجویی است که در آن بازیکنان در یک اتاق قفل شده قرار
+                            میگیرند و می بایست به صورت گروهی و در قالب یک تیم با حل کردن معما ها پیدا کردن سرنخ ها و به
+                            کار بردن استراتژی های متفاوت و مختلف در زمانی مشخص که از قبل تعیین شده از اتاق فرار کنند
                             نام بازی فرار از اتاق از یک بازی ویدئویی به همین نام که در سال 2007 در ژاپن تولید شد گرفته
                             شده . بازی فیزیکی فرار از اتاق به این صورت که امروز در حال انجام است ابتدا در شرق آسیا, سپس
                             در اروپا و آمریکا گسترش یافت .
@@ -512,12 +528,12 @@
     <section id="games">
         <div id="game-wraper">
             <div id="main-header" class="col-lg-12">
-                <h2 class="container">داستان بازی ها</h2>
+                <h2 class="container">بازی ها</h2>
             </div>
             <div style="padding: 0 60px;">
                 @if($games)
                     @foreach($games as $game_item)
-                        <div class="game-item col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                        <div class="game-item col-lg-4 col-md-4 col-sm-6 col-xs-12" ontouchstart="">
                             <div class="loaderDemo"></div>
                             @if($game_item->previewImg)
                                 <img game-img-id="{{ $game_item->id }}" class="imgPrevGame" width="100%" height="auto"
@@ -536,12 +552,13 @@
                                     <h2 class="text-center"
                                         style="margin-top:10px;font-size:2em">{{ $game_item?$game_item->name:'بدون نام' }}</h2>
                                     @if($game_item->getAttribute('quick-information'))
-                                        <div class="paragraph" style="padding: 30px">
-                                            <p style="text-align: justify;font-size: 1.2em">{{ str_limit( $game_item->getAttribute('quick-information'),310)  }} </p>
+                                        <div class="paragraph" style="padding:15px">
+                                            <p class="hidden-lg hidden-md" style="text-align: justify;font-size: .8em">{{ str_limit( $game_item->getAttribute('quick-information'),150)  }} </p>
+                                            <p class="hidden-sm hidden-xs" style="text-align: justify;font-size: 1.2em">{{ str_limit( $game_item->getAttribute('quick-information'),400)  }} </p>
                                             <form class="getDataGame">
                                                 <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
                                                 <input type="hidden" name="game_id" value="{{ $game_item->id }}"/>
-                                                <button type="submit" href="#" class="btn btn-xs readMore">مطالعه داستان
+                                                <button type="submit" href="#" class="readMore btn btn-xs">مطالعه داستان
                                                 </button>
                                             </form>
                                         </div>
@@ -651,8 +668,8 @@
                         <h4 class="text-right" style="color:#2C3E50;">فرم رزرو بازی # <span id="nameGame"
                                                                                             style="color:#730202;"></span>
                         </h4>
-                        <!-- url('/sendDataBank') -->
-                        <form action="{{ url('/reserve_user') }}" method="POST" id="formReservedGame">
+                        <!-- url('/reserve_user') -->
+                        <form action="{{ url('/sendDataBank') }}" method="POST" id="formReservedGame">
                             <input type="hidden" name="description" id="discrip" value=""/>
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="gameId" id="gameId" value="">
@@ -662,7 +679,7 @@
                                    value="">
                             <input type="hidden" name="timeSelectForReservedInput" id="timeSelectForReservedInput"
                                    value="">
-                            <input type="hidden" name="price" id="price" value="1000">
+                            <input type="hidden" name="price" id="price" value="550000">
 
                             <div class="row" style="margin-top: 30px">
                                 <div class="col-md-4 success">
@@ -708,6 +725,12 @@
                                                     href="#">قوانین و شرایط</a>
                                             <span>را مطالعه کردم</span></p>
                                     </div>
+                                    
+                                    <div class="form-group text-right alert alert-danger">
+                                        <p style="font-size: 1.1em;text-align: justify;font-weight: bolder;">
+                                              گرامی مبلغ 55000 تومان بعنوان پیش پرداخت از شما کسر خواهد شد و مابقی هزینه بازی بصورت حضوری در محل از شما دریافت می گردد
+                                        </p>
+                                    </div>
                                     <div class="form-group text-right hidden">
                                         <span style="color: darkred;font-weight: bold;font-size: 1.1em">جمع پرداختی شما :</span><strong
                                                 id="priceSumLabel"
@@ -718,7 +741,7 @@
                                 </div>
                                 <div class="col-md-4">
 
-                                    <input type="submit" value="پیش پرداخت آنلاین"
+                                    <input type="submit" value="رزرو کنید"
                                            class="btn btn-success btn-lg disabled"/>
                                 </div>
                             </div>
@@ -751,7 +774,7 @@
     @endif
     <!-- end games Section -->
 
-    <!-- map -->
+    <!-- map  
     <section id="maps_google">
         <h1 class="text-center" style="margin-bottom: 0px;">آدرس ما</h1>
         <br/>
@@ -759,6 +782,6 @@
             <div id="map" style="height: 400px;box-shadow: 0 0 25px #000"></div>
         </div>
     </section>
-    <!-- end map -->
+     end map -->
 
 @endsection

@@ -182,7 +182,14 @@ class UsersController extends Controller
                     $extension = "gif";
                 }
                 $filename = 'profile_user_' . $user->id . '.' . $extension;
-                file_put_contents(public_path() . '/img/users/' . $filename, $decoded);
+                 $pathFile = base_path() . '/public_html/img/users/' . $filename;
+                 //dd($pathFile);
+                
+                try {
+                    file_put_contents($pathFile, $decoded);
+                } catch (Exception $ex) {
+                    dd($ex);
+                }
                 $user->avatar = $filename;
                 $user->save();
 

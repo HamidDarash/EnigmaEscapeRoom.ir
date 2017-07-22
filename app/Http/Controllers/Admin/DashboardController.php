@@ -62,11 +62,17 @@ class DashboardController extends Controller
 
         if (count($user) > 0) {
             try {
-                Mail::send(['text' => 'mail'], ['user' => $user],
+                /*Mail::send(['text' => 'mail'], ['user' => $user],
                     function ($message) use ($user, $data) {
                         $message->to($user[0]['email'], $data['message'])->subject($data['subject']);
                         $message->from('info@enigmaescaperoom.ir', 'EnigmaEscapeRoom');
-                    });
+                    });*/
+                    
+                     $to = $data['emailto'];
+                     $subject = $data['subject'];
+                     $txt = $data['message'];
+                     $headers = "From: info@enigmaescaperoom.ir"."\r\n";
+                     mail($to,$subject,$txt,$headers);
 
                 return "<div class='alert alert-success'>ایمیل بدرستی ارسال گردید</div>";
             } catch (Exception $ex) {

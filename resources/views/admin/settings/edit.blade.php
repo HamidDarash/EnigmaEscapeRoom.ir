@@ -1,5 +1,17 @@
 @extends('layouts.admin')
 
+@section('script')
+ <script>
+     $(document).ready(function(){
+         $(".icons-soceial .fa").click(function(){
+             $("#optionText").text($(this).attr('title'));
+             $("#optionText").val($(this).attr('title'));
+         });
+         
+     });
+ </script>
+@stop
+
 @section('content')
 
     <div class="panel panel-default">
@@ -26,7 +38,7 @@
                 'files' => true
             ]) !!}
 
-            @include ('admin.settings.form', ['submitButtonText' => 'Update'])
+            @include ('admin.settings.form', ['submitButtonText' => 'ویرایش'])
 
             {!! Form::close() !!}
 

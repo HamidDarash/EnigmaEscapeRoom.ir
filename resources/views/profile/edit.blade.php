@@ -1,11 +1,10 @@
-<div class="panel panel-default">
-    <div class="panel-heading"><h3>ویرایش {{ $user->email }}</h3></div>
-    <div class="panel-body">
-
-        <div class="well" style="display:inline-block">
+<div class="">
+   <h3>ویرایش {{ $user->email }}</h3> 
+   <div class="">
+        <div style="display:inline-block">
             <h4 class="text-center">تصویر پروفایل</h4>
             <div class="hiddenFileInputContainter">
-                <img id="profileImgSelect" class="img-circle fileDownload"
+                <img id="profileImgSelect" class="img-circle fileDownload" style="width: 128px;background-color: rgba(0,0,255,0.1);"
                      src="{{ $user->avatar ? asset('img/users').'/'.$user->avatar : asset('img/icon_Profile.png') }}">
             </div>
         </div>
