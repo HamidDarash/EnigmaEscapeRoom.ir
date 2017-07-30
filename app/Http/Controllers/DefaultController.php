@@ -125,18 +125,19 @@ class DefaultController extends Controller
                     for ($j = 0; $j <= 6; $j++) {
                         $dateMiladi = date("Y-m-d", strtotime($start_date . " + $j day"));
                         $timed = $game_start->format('H:i');
+                        
                         if ($disableClass) {
                             if ($this->findReservItem($dateMiladi, $timed, $game_id)) {
-                                $table .= "<td class='dataReservedDisable'><div class='span'>رزرو شده</div></td>";
+                                $table .= "<td class='dataReservedDisable' date-miladi='$dateMiladi'><div class='span'>رزرو شده</div></td>";
                             } else {
-                                $table .= "<td class='dataDisable'>$timed</td>";
+                                $table .= "<td class='dataDisable' date-miladi='$dateMiladi'>$timed</td>";
                             }
                         } else {
+                           
                             if ($this->findReservItem($dateMiladi, $timed, $game_id)) {
-                                $table .= "<td class='dataReservedDisable'><div class='span'>رزرو شده</div></td>";
+                                $table .= "<td class='dataReservedDisable' date-miladi='$dateMiladi'><div class='span'>رزرو شده</div></td>";
                             } else {
                                 $dateShamsi = \Morilog\Jalali\jDate::forge($dateMiladi)->format('Y-m-d');
-                               
                                 $TEMPTime = strtotime("+".$game_time." minutes", strtotime($timed));
                                 
                                 if(date('H:i') > $timed && ($dateMiladi <= date('Y-m-d') )){
@@ -177,6 +178,27 @@ class DefaultController extends Controller
             return 0;
         }
     }
+    
+    
+    /**
+     * @param Request $request
+     * @return int
+    */
+    public function findReservItemAjax(Request $request)
+    {
+        $data = $request->all();
+        
+        $date = $data['sDateCheck'];
+        $time = $data['timeCheck'];
+        $game = $data['gameIdCheck'];
+        
+        $result = DB::select(DB::raw("SELECT * FROM `reservations` WHERE `date_reserved`= '$date' and `time_reserved` = '$time' and `game_id` = '$game'"));
+        if (count($result) > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 
 
     /**
@@ -195,7 +217,7 @@ class DefaultController extends Controller
                 $reserved->game_id = $data['gameId'];
                 $reserved->user_id = Auth::User()->id;
                 $reserved->date_reserved = $date_reserved->format('Y-m-d');
-                $reserved->time_reserved = $time_reserved->format('H:i:s');
+                $reserved->time_reserved = $time_reserved->format('H:i');
                 $reserved->activate = 1;
                 $reserved->canceled = 0;
                 $reserved->description = '';

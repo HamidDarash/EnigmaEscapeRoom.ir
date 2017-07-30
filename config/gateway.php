@@ -12,13 +12,13 @@ return [
     // Zarinpal gateway
     //--------------------------------
     'zarinpal' => [
-        'merchant-id'  => '',
+        'merchant-id'  => 'ecf0522c-5e25-11e7-b3d7-000c295eb8fc',
         'type'         => 'zarin-gate',             // Types: [zarin-gate || normal]
-        'callback-url' => '',
+        'callback-url' => 'http://enigmaescaperoom.ir/callBackRequest',
         'server'       => 'iran',                // Servers: [germany || iran || test]
-        'email'        => '',
-        'mobile'       => '',
-        'description'  => '',
+        'email'        => 's.hamed.hosseini.21@gmail.com',
+        'mobile'       => '09122386032',
+        'description'  => 'enigmaescaperoom.ir',
     ],
 
     //--------------------------------

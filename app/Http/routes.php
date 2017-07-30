@@ -8,6 +8,7 @@ Route::group(['middleware' => 'onlyAjax'], function () {
     $this->get('logout', 'Auth\AuthController@logout');
     
     Route::post('/getGameInformation', 'DefaultController@getGameInformation');
+    Route::post('/findReserve','DefaultController@findReservItemAjax');
 });
 
 $this->get('password/reset/{token?}', 'Auth\PasswordController@showResetForm');
@@ -24,6 +25,9 @@ Route::group(['middleware' => 'onlyAjax'], function () {
     Route::post('/news', 'DefaultController@getNews');
     Route::get('/drawtimetable', 'DefaultController@drawTableReservation');
     Route::post('/sendmessage','DefaultController@sendEmail');
+   
+
+    
 
 });
 
@@ -53,7 +57,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminChecker'], function () 
         Route::post('/games/changeActivate', 'Admin\\GamesController@changeActivate');
         Route::post('/posts/changeActivate', 'Admin\\PostsController@changeActivate');
         Route::post('/dashboard/sendemail', 'Admin\\DashboardController@sendEmail');
-        Route::post('/renderSelect', 'Admin\\ReservationsController@drawOptionsTimesOnDate');
+        Route::any('/renderSelect', 'Admin\\ReservationsController@drawOptionsTimesOnDate');
         Route::post('/reservations/changeActivate', 'Admin\\ReservationsController@changeActivate');
         Route::post('/reservations/changeCancel', 'Admin\\ReservationsController@changeCancel');
 

@@ -31,28 +31,42 @@
             });
             var price = 0;
             $('#game_id').change(function () {
+                
                 $("#datePicker").val('');
-                price = $('option:selected', this).attr('price-data');
-                $("#gamePrice").val(price);
+                dataSelectPerson = $('option:selected', this).attr('price-data');
+                
+                
+                 // get Count Person of array field selected game
+                //var dataSelectPerson = $('#selecterGame option:selected').attr('selected_person_count');
+                var opt = dataSelectPerson.split(',');
+                //create help table
+                if(opt.length>0){
+                    var i = 0;
+                    var tempOption = '';
+                    var tempTable =   '';
+                    for (i = 0; i <= opt.length - 1; i++) {
+                        var tempVal = opt[i].split('|');
+                        tempOption += '<option person="' + tempVal[0] + '" ' + 'value="' + tempVal[1] + '">' + tempVal[0] + ' نفر ' + '</option>';
+                    }
+                }
+
+
+                $('#person_count').html(tempOption);
+                
+                $('#person_count').change(function(){
+                    var person = $('option:selected', this).attr('person');
+                    var price = $('option:selected', this).attr('value');
+                    $("#sum_price").val(person*price);
+                });
+                
                 $('#time_reserved_holder').html("<p>لطفا تاریخ را انتخاب کنید</p>");
             });
 
-            $('#person_count').keyup(function () {
-                if (parseInt($(this).val()) <= 0 || !($(this).val())) {
-                    $(this).val(1);
-                }
-                $('#sum_price').val($(this).val() * price);
-            });
-            $('#person_count').mousedown(function () {
-                $('#person_count').keyup();
-            });
-            $('#person_count').mouseleave(function () {
-                $('#person_count').keyup();
-            });
+          
 
             setTimeout(function () {
                 $('#game_id').change();
-                $('#person_count').keyup();
+                $('#person_count').change();
             },1000);
 
             CKEDITOR.replace('description');

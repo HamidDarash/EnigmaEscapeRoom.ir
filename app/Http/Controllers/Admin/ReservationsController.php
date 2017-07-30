@@ -161,12 +161,14 @@ class ReservationsController extends Controller
      */
     public function edit($id)
     {
+        $allGame = Game::All();
         $reservation = Reservation::findOrFail($id);
         $user = User::find($reservation->user_id);
         $game = Game::find($reservation->game_id);
         return view('admin.reservations.edit', ['reservation' => $reservation,
             'userSelect' => $user,
-            'gameSelect' => $game]);
+            'gameSelect' => $game,
+            'gamesAll' => $allGame]);
     }
 
     /**
@@ -217,12 +219,12 @@ class ReservationsController extends Controller
 
         $game_time = intval($game->minutes);
 
-        $game_start = new DateTime('10:00:00');
-        $game_end = new DateTime('22:00:00');
+        $game_start = new DateTime('09:30');
+        $game_end = new DateTime('22:30');
         $count_clock = $game_start->diff($game_end);
         $count_games = floor(($count_clock->h * 60) / $game_time);
         for ($i = 0; $i <= $count_games; $i++) {
-            $timed = $game_start->format('H:i:s');
+            $timed = $game_start->format('H:i');
             if ($this->findReservItem($stringDate, $timed, $game_id)) {
                 $select_obj .= "<option miladi-date='null'  value='null' disabled>رزرو شده</option>";
             } else {

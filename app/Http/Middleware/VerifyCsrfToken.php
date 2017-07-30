@@ -16,6 +16,7 @@ class VerifyCsrfToken extends BaseVerifier
         '/reservedgame',
         '/drawtimetable',
         '/admin/renderSelect',
+        '/findReserve'
 //        '/admin/slider'
     ];
 }

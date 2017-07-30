@@ -25,7 +25,7 @@ class Reservation extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id', 'game_id', 'date_reserved', 'time_reserved', 'activate', 'canceled', 'description', 'person_count', 'sum_price','reading'];
+    protected $fillable = ['user_id', 'game_id', 'date_reserved', 'time_reserved', 'activate', 'canceled', 'description', 'person_count', 'sum_price','reading','law_ok'];
 
      /**
      * @param $date

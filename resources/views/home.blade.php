@@ -256,31 +256,59 @@
                 $('#SendInfoDrawerForm').submit();
             });
             
-         
+                $("#btnformCheckGameReserve").click(function(event){
+                    event.preventDefault();
+                         $.ajax({
+                            type: 'POST',
+                            data: $("#formCheckGameReserve").serialize(),
+                            url: '{{ url('/findReserve') }}',
+                         success: function (data) {
+                            if(data == 0 && $.isNumeric(data)){
+                              $('#form-reserve-game').modal();
+                            }else{
+                              $('#sorryModal').modal();
+                            }
+                         },
+                    error: function (jqXHR, textStatus, errorMessage) {
+                           console.log(errorMessage);
+                    }
+                });
+                 
+               });
+               
                 
             $(document).on('click', '.dataReserved', function (event) {
                 $("#lawCheck").prop('checked', false);
                 if (!$(this).find('input[type="submit"]').hasClass('disabled')) {
                     $("#formReservedGame").find('input[type="submit"]').addClass('disabled');
                 }
-
-
-                //check login for reserve
-                if (userId != null && userId != "") {
-                    $('#form-reserve-game').modal();
-                } else {
-                    $('#register-form-load').click();
-                    return false;
-                }
-
+                
                 var timeGo = $(this).attr('time-select');
                 var dateGo = $(this).attr('date-miladi');
 
 
                 var ShamsiDate = $(this).attr('date-shamsi');
                 var priceGo = $(this).attr('game-price');
+                
+                var game_id_chack = $('#selecterGame option:selected').val();
                 // init modal form
                 $('#gameId').val($('#selecterGame option:selected').val());
+                
+
+                //check login for reserve
+                if (userId != null && userId != "") {
+                    $("#sDateCheck").val(dateGo);
+                    $("#timeCheck").val(timeGo);
+                    $("#gameIdCheck").val(game_id_chack);
+                    $("#btnformCheckGameReserve").click();
+               
+                } else {
+                    $('#register-form-load').click();
+                    return false;
+                }
+
+                
+                
 
                 // get Count Person of array field selected game
                 var dataSelectPerson = $('#selecterGame option:selected').attr('selected_person_count');
@@ -292,7 +320,7 @@
                     var tempTable =   '<table class="table table-bordered"><tr><th>تعداد نفر</th><th>قیمت به ازای هر نفر</th></tr>';
                     for (i = 0; i <= opt.length - 1; i++) {
                         var tempVal = opt[i].split('|');
-                        tempOption += '<option value="' + tempVal[0] + '">' + tempVal[0] + ' نفر ' + '</option>';
+                        tempOption += '<option price="'+ tempVal[0]*tempVal[1] +'" value="' + tempVal[0] + '">' + tempVal[0] + ' نفر ' + '</option>';
                         var j = 0;
                         tempTable += '<tr>';
                         for (j = 0; j <= tempVal.length - 1; j++) {
@@ -309,31 +337,18 @@
 
 
                 $('#select_count_person').html(tempOption);
+                $('#select_count_person').change(function(){
+                    var price = $(this).attr('price');
+                    $('#sumPrice').val(price);
+                });
+                
                 $('#priceHelp').html(tempTable);
                 // $('#userId').val(userId);
                 $('#dateSelectForReservedText').html(ShamsiDate);
                 $('#dateSelectForReservedInput').val(dateGo);
                 $('#timeSelectForReservedText').html(timeGo);
                 $('#timeSelectForReservedInput').val(timeGo);
-
-//                $('#priceSelectForReservedText').html(priceGo + ' ريال ');
-
-                //init price * person count
-//                setTimeout(function () {
-//                    $('#person_count').keyup();
-//                }, 500);
-
-                //init price * person count on keyUp
-//                $('#person_count').keyup(function () {
-//                    if (parseInt($(this).val()) <= 0 || !($(this).val())) {
-//                        $(this).val(1);
-//                    }
-//                    $('#priceSumLabel').html($(this).val() * priceGo);
-//                });
-                //init price * person count mouseDown
-//                $('#person_count').mouseup(function () {
-//                    $('#person_count').keyup();
-//                });
+ 
                 $('#discrip').val($('#selecterGame option:selected').html());
                 $('#nameGame').html($('#selecterGame option:selected').html());
                 var collectionImgPreview = $('.imgPrevGame');
@@ -583,6 +598,15 @@
 
     @if(isset($games))
         <!-- reserved Section -->
+        
+        <form class="hidden" id="formCheckGameReserve">
+            <!--findReservItem-->
+            <input name="__token" value="{{ csrf_token() }}" type="hidden"/>
+            <input id="sDateCheck" name="sDateCheck" type="hidden" value=""/>
+            <input id="timeCheck" name="timeCheck" type="hidden" />
+            <input id="gameIdCheck" name="gameIdCheck" type="hidden" />
+            <input type="submit" id="btnformCheckGameReserve" />
+        </form>
         <section id="reserved" class="success">
             <div class="container">
                 <h1 style="color:yellow">رزرو بازی</h1>
@@ -680,6 +704,7 @@
                             <input type="hidden" name="timeSelectForReservedInput" id="timeSelectForReservedInput"
                                    value="">
                             <input type="hidden" name="price" id="price" value="550000">
+                            <input type="hidden" name="sumPrice" id="sumPrice"/>
 
                             <div class="row" style="margin-top: 30px">
                                 <div class="col-md-4 success">
@@ -728,7 +753,7 @@
                                     
                                     <div class="form-group text-right alert alert-danger">
                                         <p style="font-size: 1.1em;text-align: justify;font-weight: bolder;">
-                                            کاربر گرامی مبلغ 55000 تومان بعنوان پیش پرداخت از شما کسر خواهد شد و مابقی هزینه بازی بصورت حضوری در محل از شما دریافت می گردد
+                                              کاربر گرامی مبلغ 55000 تومان بعنوان پیش پرداخت از شما کسر خواهد شد و مابقی هزینه بازی بصورت حضوری در محل از شما دریافت می گردد
                                         </p>
                                     </div>
                                     <div class="form-group text-right hidden">
@@ -757,7 +782,7 @@
             <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header label-info">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">قوانین و شرایط بازی</h4>
                     </div>
@@ -771,6 +796,28 @@
 
             </div>
         </div>
+        
+           <div id="sorryModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header label-danger">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">هم زمانی رزرو</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h1>متاسفیم!!!</h1>
+                        <p style="text-align:justify">کاربر دیگری این بازی رو قبل از شما رزرو کرده و چون شما صفحه را بروزرسانی نکردیده متوجه این رزرو نشده اید شما می توانید از ساعات دیگر برای رزرو استفاده کنید</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">بستن</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
     @endif
     <!-- end games Section -->
 

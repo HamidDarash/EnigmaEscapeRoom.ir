@@ -77,13 +77,13 @@ class callBackController extends Controller
                         $reserved->game_id = $data[0]['gameId'];
                         $reserved->user_id = Auth::User()->id;
                         $reserved->date_reserved = $date_reserved->format('Y-m-d');
-                        $reserved->time_reserved = $time_reserved->format('H:i:s');
+                        $reserved->time_reserved = $time_reserved->format('H:i');
                         $reserved->activate = 1;
                         $reserved->canceled = 0;
                         $reserved->law_ok = 1;
                         $reserved->description = '';
                         $reserved->person_count = $data[0]['person_count'];
-                        $reserved->sum_price = 0;
+                        $reserved->sum_price = $data[0]['sumPrice'];
                         $reserved->save();
                     }
                 }
